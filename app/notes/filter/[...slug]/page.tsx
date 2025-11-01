@@ -1,24 +1,20 @@
 import NoteList from '@/components/NoteList/NoteList';
-import ErrorMessage from '@/components/ErrorMessage/ErrorMessage';
 import { fetchNotes } from '@/lib/api';
 import { Tag } from '@/types/note';
 
 interface Props {
-  params: { tag?: Tag[] };
+  params: Promise<{ slug?: string[] }>;
 }
 
 export default async function NotesByTagPage({ params }: Props) {
-  const tagParam = params.tag?.[0] ?? 'all';
-  const tag: Tag| null = tagParam === 'all' ? null : tagParam;
+  const { slug } = await params; 
+  const tagParam = slug?.[0] ?? 'all';
+  const tag: Tag | null = tagParam === 'all' ? null : (tagParam as Tag);
 
-  const notesData = await fetchNotes(1, '', tag); 
+  const notesData = await fetchNotes(1, '', tag);
+  console.log('tag:', tag);
+
   return (
-    <>
-      {notesData ? (
         <NoteList notes={notesData.notes} />
-      ) : (
-        <ErrorMessage />
-      )}
-    </>
   );
 }

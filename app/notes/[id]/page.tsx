@@ -1,14 +1,14 @@
-
 import NotePreview from "@/components/NotePreview/NotePreview";
 import { fetchNoteById } from "@/lib/api";
 import { notFound } from "next/navigation";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function NotePage({ params }: Props) {
-  const note = await fetchNoteById(params.id);
+  const { id } = await params; 
+  const note = await fetchNoteById(id);
 
   if (!note) return notFound();
 
