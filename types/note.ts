@@ -14,3 +14,4 @@ export interface AddNoteFormValue {
   content: string;
   tag: string;
 }
+export const tags = ['All', 'Todo', 'Work', 'Personal', 'Meeting', 'Shopping'];

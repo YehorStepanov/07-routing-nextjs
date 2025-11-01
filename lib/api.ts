@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { AddNoteFormValue, Note } from '../types/note';
+import type { AddNoteFormValue, Note, Tag } from '../types/note';
 
 const api = axios.create({
     baseURL: 'https://notehub-public.goit.study/api',
@@ -12,13 +12,14 @@ export interface NoteResponse {
   notes: Note[];
   totalPages: number;
 }
-export async function fetchNotes(page:number, search:string ) : Promise<NoteResponse>{
+export async function fetchNotes(page:number, search:string, tag: Tag| null) : Promise<NoteResponse>{
   const res = await api.get<NoteResponse>("/notes", {
     params:{
         page,
         perPage: 12,
         sortBy: 'created',
-        search
+        search,
+        tag
     },
   });
   return res.data;
