@@ -23,7 +23,7 @@ export default function NotesClient() {
 
   const { data, isError, isFetching } = useQuery({
     queryKey: ['notes', page, debouncedRequest],
-    queryFn: () => fetchNotes(page, debouncedRequest),
+    queryFn: () => fetchNotes(page, debouncedRequest, null),
     retry: false,
     placeholderData: prev => prev,
   });
@@ -49,7 +49,7 @@ export default function NotesClient() {
       {isError && <ErrorMessage />}
 
       {openModal && (
-        <Modal onClose={toggleModal}>
+        <Modal>
           <NoteForm onClose={toggleModal} />
         </Modal>
       )}
