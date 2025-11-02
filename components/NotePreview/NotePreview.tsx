@@ -16,11 +16,18 @@ export default function NotePreview({ note }: NotePreviewProps) {
     : `Created at: ${new Date(note.createdAt).toLocaleString()}`;
 
   return (
-    <div className={css.wrapper}>
-      <h2 className={css.title}>{note.title}</h2>
-      <p className={css.content}>{note.content}</p>
-      <p className={css.tag}>Tag: {note.tag}</p>
-      <p className={css.date}>{formattedDate}</p>
+    <div className={css.container}>
+      <div className={css.item}>
+        <div className={css.header}>
+          <h2>{note.title}</h2>
+          <span className={css.tag}>{note.tag}</span>
+        </div>
+
+        <div className={css.content}>{note.content}</div>
+
+        <p className={css.date}>{formattedDate}</p>
+      </div>
     </div>
   );
 }
+
