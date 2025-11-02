@@ -3,10 +3,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchNoteById } from "@/lib/api";
 import Modal from "@/components/Modal/Modal";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import NotePreview from "@/components/NotePreview/NotePreview";
 
-export default function NotePreviewClient() {
+
+type Props = object;
+
+export default function NotePreviewClient({}: Props) {
+  const router = useRouter();
   const { id } = useParams<{ id: string }>();
 
   const { data: note, isLoading, error } = useQuery({
@@ -15,11 +19,16 @@ export default function NotePreviewClient() {
     refetchOnMount: false,
   });
 
-  if (isLoading) return <Modal>Loading...</Modal>;
-  if (error || !note) return <Modal>Error loading note.</Modal>;
+  const handleClose = () => router.back(); 
+
+  if (isLoading)
+    return <Modal onClose={handleClose}>Loading...</Modal>;
+
+  if (error || !note)
+    return <Modal onClose={handleClose}>Error loading note.</Modal>;
 
   return (
-    <Modal>
+    <Modal onClose={handleClose}>
       <NotePreview note={note} />
     </Modal>
   );
