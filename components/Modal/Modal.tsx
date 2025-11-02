@@ -19,8 +19,11 @@ export default function Modal({ children, onClose}: ModalProps) {
     }
   };
   const handleClose = useCallback(() => {
-    if (onClose) onClose();
-    else router.back();
+    if (onClose) {onClose();      
+    }
+    else {
+      router.back();     
+    }
   }, [onClose, router]);
 
   useEffect(() => {
@@ -43,13 +46,8 @@ export default function Modal({ children, onClose}: ModalProps) {
       role="dialog"
       aria-modal="true"
     >
-      <div className={css.modal}><button
-          className={css.backBtn}
-          onClick={handleClose}
-          aria-label="Close modal"
-        >
-          ✕
-        </button>{children}</div>
+      <div className={css.modal}>
+        {children}</div>
     </div>,
     document.body
   );
